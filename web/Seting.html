@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Seting</title>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="img/ico.png"/>
+        <!-- bootstrap css -->
+        <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.css">
+        <!-- bootstrap js -->
+        <script src="js/bootstrap-5.3.3/bootstrap.bundle.js"></script>
+        <!-- main css -->
+        <link rel="stylesheet" href="css/main.css">
+        <!-- main js -->
+        <script src="js/main.js"></script>
+        <!-- eel -->
+        <script src="eel.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+
+            
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a href="EarnCalculator.html"><img src="img/back.png" alt="Settings" class="ms-auto"></a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="convert" value="option3" onclick="UpdateAutoConver()">
+            <label class="form-check-label" for="checkbox3">
+                <b>Auto convert this '0.001' to '0,001'</b>
+            </label>
+        </div><br>
+
+        <div class="mb-3">
+            <label for="input1" class="form-label"><b>API_KEY:</b></label>
+            <input type="password" class="form-control" id="secret1" placeholder="Enter the data">
+        </div>
+        <div class="mb-3">
+            <label for="input2" class="form-label"><b>API_SECRET:</b></label>
+            <input type="password" class="form-control" id="secret2" placeholder="Enter the data">
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="Update()">Update</button>
+        <button type="button" class="btn btn-secondary" onclick="Clear()">Clear</button>
+    </div>
+
+    <script>
+        async function LoadSettings(){
+            let st = await eel.Setings('LoadSettings',[])();           
+            if (st[0] == true){              
+                document.getElementById('secret1').value = st[1];
+                document.getElementById('secret2').value = st[2];
+                document.getElementById('convert').checked = st[3];
+            };
+        };
+        LoadSettings();
+        async function UpdateAutoConver(){
+            cn = document.getElementById('convert').checked
+            let st = await eel.Setings('UpdateAutoConver',[cn])();           
+        };
+        async function Update(){
+            sc1 = document.getElementById('secret1').value;
+            sc2 = document.getElementById('secret2').value;
+            cn = document.getElementById('convert').checked
+            let st = await eel.Setings('UpdateSettings',[sc1, sc2, cn])();           
+        }; 
+        async function Clear(){
+            await eel.Setings('ClearSettings',[])();  
+            LoadSettings();         
+        };       
+    </script>
+
+
+
+        </div>
+    </body>
+</html>

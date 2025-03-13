@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>EarnCalculator</title>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="img/ico.png"/>
+        <!-- bootstrap css -->
+        <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.css">
+        <!-- bootstrap js -->
+        <script src="js/bootstrap-5.3.3/bootstrap.bundle.js"></script>
+        <!-- main css -->
+        <link rel="stylesheet" href="css/main.css">
+        <!-- main js -->
+        <script src="js/main.js"></script>
+        <!-- eel -->
+        <script src="eel.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+
+            
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a href="seting.html" class="ms-auto"><img src="img/settings.png" alt="Settings"></a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card p-4">
+            <form>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="Asset" placeholder="Asset">
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="startDate" class="form-label"><b>From:</b></label>
+                        <input type="date" class="form-control" id="startDate">
+                    </div>
+                    <div class="col">
+                        <label for="endDate" class="form-label"><b>To:</b></label>
+                        <input type="date" class="form-control" id="endDate">
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <select class="form-select" id="type">
+                            <option value="Locked">Locked</option>
+                            <option selected value="Flexible">Flexible</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" id="typeRewards">
+                            <option selected value="ALL">ALL</option>
+                            <option value="BONUS">BONUS</option>
+                            <option value="REALTIME">REALTIME</option>
+                            <option value="REWARDS">REWARDS</option>
+                        </select>
+                    </div>
+                </div>
+                               
+            </form>
+            <button type="submit" class="btn btn-primary w-100" onclick="EarnCalculate()">Calculate</button>
+        </div>
+    </div>
+
+    <div class="container mt-5 d-flex align-items-center" id="calculateResult">        
+    </div>
+
+    <script>
+        async function EarnCalculate(){
+            asset = document.getElementById('Asset').value;
+            startDate = document.getElementById('startDate').value;
+            endDate = document.getElementById('endDate').value;
+            type = document.getElementById('type').value;
+            typeRewards = document.getElementById('typeRewards').value;
+            let result = await eel.Index('EarnCalculate',[asset, startDate, endDate, type, typeRewards])(); 
+            if (result[0] == true){
+                document.getElementById('calculateResult').innerHTML = '<div class="alert alert-success text-center flex-grow-1" role="alert" onclick="CopyCalculate()" style="cursor: pointer;" title="Copy Result"><b>+ '+result[1]+' '+asset+'<b></div>'; 
+            }else{
+                document.getElementById('calculateResult').innerHTML = '<div class="alert alert-danger text-center flex-grow-1" role="alert"><b>'+result[1]+'<b></div>';
+            };       
+        }; 
+        async function CopyCalculate(){
+            await eel.Index('CopyCalculateResult',[])();       
+        };      
+    </script>
+
+
+
+        </div>
+    </body>
+</html>
