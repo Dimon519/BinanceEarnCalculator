@@ -51,7 +51,7 @@
 
     <script>
         async function LoadSettings(){
-            let st = await eel.Setings('LoadSettings',[])();           
+            let st = await eel.Settings('LoadSettings',[])();           
             if (st[0] == true){              
                 document.getElementById('secret1').value = st[1];
                 document.getElementById('secret2').value = st[2];
@@ -61,16 +61,16 @@
         LoadSettings();
         async function UpdateAutoConver(){
             cn = document.getElementById('convert').checked
-            let st = await eel.Setings('UpdateAutoConver',[cn])();           
+            let st = await eel.Settings('UpdateAutoConver',[cn])();           
         };
         async function Update(){
             sc1 = document.getElementById('secret1').value;
             sc2 = document.getElementById('secret2').value;
             cn = document.getElementById('convert').checked
-            let st = await eel.Setings('UpdateSettings',[sc1, sc2, cn])();           
+            let st = await eel.Settings('UpdateSettings',[sc1, sc2, cn])();           
         }; 
         async function Clear(){
-            await eel.Setings('ClearSettings',[])();  
+            await eel.Settings('ClearSettings',[])();  
             LoadSettings();         
         };       
     </script>
